@@ -55,7 +55,10 @@ Teks Belum ada peserta tampil di elemen paragraf pesan.
 * **Keamanan Teks:Karena menggunakan `textContent`, aplikasi dibatasi untuk tidak mem-parsing 
                 string HTML secara langsung demi menjaga keamanan dari celah *XSS (Cross-Site Scripting)*.
 
-1. Perbedaan textContent dan HTML parsing 
+
+
+Penjelasan perubahan antara textContent dan HTML parsing :
+
             "TEXTCONTENT"
    - TextContent Definisi: Properti JavaScript yang digunakan untuk mengatur atau mengambil teks murni, di dalam suatu elemen DOM.   
    - Contohnya di kode saya : di sini saya memasukkan string yang mengandung tag HTML seperti <b>Rina</b>, browser akan menampilkan string tersebut secara mentah di layar persis apa adanya dan tidak akan membuat elemen tag baru di DOM.
