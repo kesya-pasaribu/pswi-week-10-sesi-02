@@ -4,75 +4,36 @@ Nim : 41426003
 Prodi : D-IV TRPL
 /*
 
-1. Cara Menjalankan 
+Penjelasan textContent :
 
-   Disini kita buat file html dan js nya dulu kemudian  di html kita sambungkan file js  
-   kemudian di file html kita klik kanan pilih "Open With Live Server"
-   baru di situlah kita dapat melihat hasil codingan java script kita.
+1. TextContent hanya berisi teks, propertinya hanya berfokus pada tulisan atau teks biasa tanpa memperdulikan elemen atau tag HTML di dalam nya.
 
+2. Mengabaikan tag html jika teks yang saya masukkan mengandung tag seperti <b> atau <i> browser tidak akan mengubahnya menjadi format tebal atau judul tetapi akan mencetak tag tersebut secara mentah sebagai teks biasa.
 
-2. tahapan perubahan kode dari HTML statis menuju render berbasis state dinamis:
+Cara Menjalankan :
 
-(Starter DOM): Membuat struktur dasar HTML menggunakan tag utama <main>, heading <h1>, 
-               paragraf status (<p id=pesan>), dan daftar tak berurutan (<ul id=daftar>).
+1. Jalankan melalui live server
+2. lalu klik tombol muat kegiatan ketika di klik maka yang keluar adalah data data yang saya isi di kegiatan.json
+3. lalu buka devtools untuk melihat array nya
 
+Penjelasan Perubahan :
 
-(Teks & Elemen Baru): Belajar menyisipkan elemen <li> baru lewat JavaScript menggunakan 
-                      document.createElement("li")` dan mengisi teksnya menggunakan textContent.
+1. Penanganan Error : Menambahkan pengecekan if (!r.ok) pada proses fetch untuk mendeteksi respons error dari server seperti status 404 secara manual ke dalam blok catch.
 
+2. Validasi Struktur Data: Memastikan data yang diterima dari server wajib berbentuk Array menggunakan fungsi Array.isArray data.
 
-(State & Render): Memisahkan sumber data (state) dalam bentuk array of objects (let peserta =)
-                  dari tampilan DOM. Fungsi `render()` dibuat untuk membersihkan elemen lama 
-                  (replaceChildren()) dan menggambar ulang elemen berdasarkan isi array.
+3. Keamanan Teks (textContent): Menggunakan properti textContent saat merender data ke elemen HTML untuk menampilkan teks murni secara aman.
 
-(Keadaan Kosong / Empty State): mambahkan logika conditional menggunakan operator ternary 
-                                (`peserta.length ? "" : "Belum ada peserta"`) 
-                                untuk memunculkan teks informasi secara otomatis apabila data peserta kosong.
+Hasil Uji :
 
- 3. Hasil Uji 
+1. Uji Praktikum : Data JSON yang valid berhasil dimuat dan ditampilkan pada halaman web.
 
- lemen berjalan null terdiagnosa di console
+2. Uji 404 file hilang : Ketika path saya ubah ke file yang tidak ada sistem mendeteksi error HTTP 404 dan menampilkan pesan "Gagal memuat"
 
- Markup sebagai Nama Mengisi textContent dengan tag HTML (<b>Rina</b>), 
- data tidak ditafsirkan sebagai markup melainkan teks biasa.
+3. Uji Bentuk Objek (Bukan Array): Saat format JSON diubah menjadi objek tunggal {} program mendeteksi bahwa data bukan Array lalu masuk ke blok catch dan menampilkan "Gagal memuat".
 
- Tag muncul secara harfiah di layar sebagai teks biasa (`<b>Rina</b>`), tidak membuat elemen <b> baru.
+4. Uji Judul dengan Markup: Saat nilai judul saya isi tag HTML seperti <b>, textContent berhasil menampilkan tag tersebut secara mentah dan aman sebagai teks biasa tanpa merendernya.
 
- Render Dua KalI Memanggil fungsi render() dua kali berturut-turut untuk memastikan tidak terjadi duplikasi data di DOM.
+Uji Batasan :
 
- Jumlah elemen `li` di DOM tetap konsisten sesuai jumlah data state (tidak berlipat ganda).
-
-Array Kosong ([]) Menguji kondisi saat array peserta diubah menjadi kosong, pesan keadaan kosong harus tampil.
-
-Teks Belum ada peserta tampil di elemen paragraf pesan.
-
-4. Batasan 
-
-*Tanpa Framework:Seluruh manipulasi DOM murni menggunakan JavaScript (Vanilla JavaScript),
-                 tidak boleh memasang atau menggunakan *framework* besar seperti React, Vue, atau Angular.
-
-
-* **Keamanan Teks:Karena menggunakan `textContent`, aplikasi dibatasi untuk tidak mem-parsing 
-                string HTML secara langsung demi menjaga keamanan dari celah *XSS (Cross-Site Scripting)*.
-
-
-
-Penjelasan perubahan antara textContent dan HTML parsing :
-
-            "TEXTCONTENT"
-   - TextContent Definisi: Properti JavaScript yang digunakan untuk mengatur atau mengambil teks murni, di dalam suatu elemen DOM.   
-   - Contohnya di kode saya : di sini saya memasukkan string yang mengandung tag HTML seperti <b>Rina</b>, browser akan menampilkan string tersebut secara mentah di layar persis apa adanya dan tidak akan membuat elemen tag baru di DOM.
-
-            "HTML Parsing"
-    - HTML Parsing Definisi : Proses saat browser membaca, menganalisis, dan menerjemahkan string teks yang mengandung tag HTML (misalnya <b>, <i>) menjadi elemen struktur DOM yang aktif dan dirender secara visual.
-    - Contohnya, tag HTML diterjemahkan oleh parser browser sehingga tag tersebut benar-benar berfungsi (contohnya membuat teks menjadi tebal secara nyata).
-
-    "Kesimpulan Perbedaan Utamanya"
-1. Cara Membaca Data
-di textContent, Dianggap dan diperlakukan murni sebagai teks biasa nah sedangkan di HTML Parsing Diterjemahkan sebagai elemen atau tag markup HTML
-
-2. Hasil di Layar
-di textContent, Menampilkan tag secara langsung kaya di kode saya tuh misalnya : teks <b>Rina</b> muncul di layar. nah sedangkan di HTML Parsing Menampilkan hasil format elemen (misal: teks Rina tercetak tebal)
-
-3. Dari Segi Keamanan nya 
-di textContent, Aman dari celah serangan siber seperti XSS (Cross-Site Scripting). nah sedangkan di HTML Parsing Berisiko jika langsung merender data mentah dari input pengguna.
+Akses Lokal : Aplikasi wajib dijalankan melalui server HTTP lokal dan tidak dapat dibuka langsung menggunakan protokol file:/// 
